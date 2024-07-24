@@ -1,0 +1,320 @@
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+.article-trnd-wrapper {
+    max-width: 1312px;
+    margin: 36px auto 0 auto;
+    display: grid;
+}
+@media screen and (min-width: 1201px){
+.article-item-card:nth-child(1) {
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding-right: 32px;
+}
+.article-item-card:nth-child(2) {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 7;
+}
+.article-item-card:nth-child(3) {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 7;
+    padding-top: 32px;
+}
+.article-item-card:not(:first-child) {
+    display: flex;
+    gap: 24px;
+}
+}
+.article-item-card:nth-child(1) img {
+    width: 551px;
+    height: 231px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 1px solid #7ECBA8;
+}
+.article-header {
+    max-width: 1312px;
+    margin: auto;
+}
+.article-header h2 {
+    font-size: 36px;
+    color: #054327;
+    font-family: 'Mochiy Pop One';
+    margin: 36px 0;
+}
+.trending-articles {
+    padding: 0 24px 64px;
+}
+.article-item-card:nth-child(2) img,.article-item-card:nth-child(3) img {
+    width: 320px;
+    height: 200px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 1px solid #7ECBA8;
+}
+.article-post-detail h3 a {
+    color: #042F18;
+    font-size: 18px;
+    font-weight: 600;
+    height: 27px;
+    overflow: hidden;
+    display: block;
+}
+.article-post-detail p {
+    font-size: 16px;
+    color: #2B2928;
+    line-height: 24px;
+    height: 53px;
+    overflow: hidden;
+    letter-spacing: 0;
+}
+p.article-post-cat-date {
+    height: auto;
+    color: #FF8103;
+    font-size: 14px;
+    line-height: 27px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+.main-blog h1.title--primary {
+    color: #054327;
+    font-size: 36px;
+    font-family: Mochiy pop one;
+    margin: 0 0 28px 0;
+}
+.article-post-detail {
+    padding-top: 20px;
+}
+.trending-articles .slick-prev:before, .trending-articles .slick-next:before {
+    font-size: 24px;
+    opacity: 1;
+    color: #7b3b00;
+}
+  .trending-articles .slick-arrow {
+    top: 30%;
+    background: #ffc773 !important;
+    width: 48px;
+    height: 48px;
+    border-radius: 50px;
+    color: #7b3b00;
+}
+  
+@media screen and (max-width: 1200px){
+  .article-trnd-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .article-item-card img {
+    width: 100% !important;
+    height: 338px !important;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .article-trnd-wrapper {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 40px;
+  }
+  .trending-articles {
+    padding: 0 12px 36px;
+  }
+  .article-item-card {
+    padding: 0 12px;
+  }
+  .trending-articles .slick-next {
+    right: 0;
+  }
+  .trending-articles .slick-prev {
+    left: 0;
+  }
+  .main-blog h1.title--primary {
+    font-size: 24px;
+    text-align: center;
+  }
+  .blog-articles  .card__inner {
+    min-height: 338px;
+  }
+}
+{%- endstyle -%}
+
+
+<div class="trending-articles">
+  <div class="article-header">
+    <h2>Trending Blogs</h2>
+  </div>
+  <div class="article-trnd-wrapper">
+    {% for article in blog.articles %}
+      {% if article.tags contains 'trending' %}
+        <div class="article-item-card">
+          <a href="{{ article.url }}">
+            <img src="{{ article | img_url:'550x' }}" loading="lazy" width="100" height="100" alt="{{ article.title }}">
+          </a>
+          <div class="article-post-detail">
+            <p class="article-post-cat-date"><span>{{ article.metafields.custom.article_category }} •</span><span>{{ article.published_at | time_tag: format: 'date' }}</span></p>
+            <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+            <p>{{ article.excerpt }}</p>
+            <a href="{{ article.url }}" class="button-primary-no-bg">VIEW MORE</a>
+          </div>
+        </div>  
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+
+{%- paginate blog.articles by 6 -%}
+  <div class="main-blog page-width section-{{ section.id }}-padding">
+    <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      Latest Blogs
+    </h1>
+
+    <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
+      {%- for article in blog.articles -%}
+        <div
+          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {%- render 'article-card',
+            article: article,
+            media_height: section.settings.image_height,
+            media_aspect_ratio: article.image.aspect_ratio,
+            show_image: section.settings.show_image,
+            show_date: section.settings.show_date,
+            show_author: section.settings.show_author,
+            show_excerpt: true
+          -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.main-blog.settings.header.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:sections.main-blog.settings.layout.options__1.label"
+        },
+        {
+          "value": "collage",
+          "label": "t:sections.main-blog.settings.layout.options__2.label"
+        }
+      ],
+      "default": "collage",
+      "label": "t:sections.main-blog.settings.layout.label",
+      "info": "t:sections.main-blog.settings.layout.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-blog.settings.image_height.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.main-blog.settings.image_height.options__2.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.main-blog.settings.image_height.options__3.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.main-blog.settings.image_height.options__4.label"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.main-blog.settings.image_height.label",
+      "info": "t:sections.main-blog.settings.image_height.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_date.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "t:sections.main-blog.settings.show_author.label"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-blog.settings.paragraph.content"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

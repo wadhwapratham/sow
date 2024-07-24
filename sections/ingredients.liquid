@@ -1,0 +1,183 @@
+<section class="ingredients-and-more">
+  <div class="section-ingredients">
+    <div class="ethics-header" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="ingredients-wrapper section-width">
+      <div class="ingredients-slider" data-aos="fade-up" data-aos-duration="1000">
+      {% for block in section.blocks %}
+        <div class="ingredients-item">
+          <img src="{{ block.settings.image | img_url:'300x' }}" width="100" height="100" loading="lazy" alt="{{ block.settings.title }}">
+          <div class="ingredient-content">
+            <h3>{{ block.settings.title }}</h3>
+            {% if block.settings.content != blank %}<p>{{ block.settings.content }}</p>{% endif %}
+            <a href="{{ block.settings.link }}" class="button-primary-no-bg">{{ block.settings.label }}</a>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.ingredients-wrapper.section-width {
+    max-width: 1277px;
+}
+  
+.ingredients-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    max-width: 586px;
+    margin: auto;
+    padding: 0 20px;
+}
+.ingredients-item img {
+    width: 100%;
+    height: 299px;
+    object-fit: cover;
+    border-radius: 26px;
+}
+.ingredient-content h3 {
+    font-size: 25.92px;
+    font-weight: 600;
+    color: #1B4B35;
+}
+.ingredient-content p {
+    max-width: 448px;
+    letter-spacing: 0;
+    font-size: 16px;
+    color: #2B2928;
+    line-height: 24px;
+    margin: 10px 0 30px 0;
+    height: 74px;
+    overflow: hidden;
+}
+.ingredient-content {
+    padding-top: 24px;
+}
+.section-ingredients {
+    padding: 64px 0 72px;
+}
+
+.ingredients-and-more .slick-arrow {
+    top: 40%;
+    background: #FFC773 !important;
+    width: 48px;
+    height: 48px;
+    border-radius: 50px;
+    color: #7B3B00;
+}
+.ingredients-and-more .slick-prev {
+    left: 20px;
+}
+.ingredients-and-more .slick-arrow {
+    right: 20px;
+}
+.ingredients-and-more .slick-prev:before,.ingredients-and-more .slick-next:before {
+    font-size: 24px;
+    opacity: 1;
+    color: #7B3B00;
+}
+.ingredients-and-more button.slick-arrow.slick-disabled {
+    display: none;
+}
+  
+@media screen and (max-width: 768px){
+  .ingredient-content h3 {
+    font-size: 21px;
+  }
+  .ingredient-content p {
+    font-size: 14px;
+    line-height: 20px;
+    height: 60px;
+  }
+}
+
+
+@media screen and (min-width: 526px){
+  .ingredients-wrapper .ingredients-slider {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-top: 60px;
+  }
+}
+  
+  
+@media screen and (max-width: 525px){
+  .ingredients-item {
+    padding: 0 20px 0 0;
+  }
+  .ingredient-content p {
+    height: auto;
+  }
+  .ingredients-wrapper {
+    padding: 30px 0 0 24px !important;
+  }
+  .section-ingredients {
+      padding: 48px 0 64px;
+    }
+  .ingredients-wrapper .ingredients-slider {
+    padding-top: 10px;
+  }
+  .ingredients-and-more .slick-prev {
+    left: 0px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Ingredients",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Section Heading",
+        "id": "heading"
+      }
+    ],
+    "blocks": [
+      {
+        "name" : "Ingredient",
+        "type": "repeater",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id" : "image",
+            "label" : "Ingredient Image"
+          },
+          {
+            "type": "text",
+            "id" : "title",
+            "label" : "Ingredient Title"
+          },
+          {
+            "type": "textarea",
+            "id" : "content",
+            "label" : "Ingredient Detail"
+          },
+          {
+            "type": "url",
+            "id" : "link",
+            "label" : "Ingredient Link"
+          },
+          {
+            "type": "text",
+            "id" : "label",
+            "label" : "Button Label",
+            "default": "Learn More"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Ingredients"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,31 @@
+<div class="collection-card-container">
+  <div class="product-image-container">
+    <a href="{{ product.url }}">
+      <img src="{{ product | img_url:'400x' }}" alt="{{ product.title }}" width="100" height="100" loading="lazy">
+    </a>
+  </div>
+  <div class="produtc-content-inner">
+    <div class="product-details">
+      <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+      <div class="price-holder"><p>{{ product.price | money }}</p><p class="comapreaTPrice">{{ product.compare_at_price | money }}</p></div>
+    </div>
+    {% unless product.has_only_default_variant %}
+    <div class="variant-wrapper">
+      <fieldset>
+        <legend><span>Flavour</span><span class="selectedFlavour">{{ product.selected_or_first_available_variant.option1 }}</span></legend>
+        <div class="variant-itemcontainer">
+          {% for variant in product.variants %}
+          {% if variant.metafields.custom.variant_image != blank %}
+            <label class="labelFlavor {% if forloop.index == 1 %}checked{% endif %}">
+              <img src="{{ variant.metafields.custom.variant_image | img_url:'50x' }}" loading="lazy" width="64" height="63">
+              <input type='radio'  data-variant-image="{{ variant | img_url:'' }}" name="flavour" value="{{ variant.id }}" data-variant-name="{{ variant.option1 }}" {% if forloop.index == 1 %}checked{% endif %}>
+            </label>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </fieldset>
+    </div>
+    {% endunless %}
+    <a href="{{ product.url }}" class="button-secondary">Learn More</a>
+  </div>
+</div>

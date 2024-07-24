@@ -1,0 +1,168 @@
+<section class="meet-our-founder">
+  <div class="section-wrapper-founder">
+    <div class="ethics-header">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="founder-grid">
+      {% for block in section.blocks %}
+        <div class="meetFounder funder-item">
+          <img src="{{ block.settings.img | img_url:'' }}" width="100" height="100" alt="{{ block.settings.img.alt }}" loading="lazy">
+          <div class="founder-detailblock">
+            <div class="intro-founder">
+              <h3>{{ block.settings.name }}</h3>
+              <p class="founderTitle">{{ block.settings.title }}</p>
+              <p>{{ block.settings.desc }}</p>
+            </div>
+            <div class="founderSocial">
+              <a href="{{ block.settings.link1 }}"><span>{{ block.settings.icon1 }}</span></a>
+              <a href="{{ block.settings.link2 }}"><span>{{ block.settings.icon2 }}</span></a>
+              <a href="{{ block.settings.link3 }}"><span>{{ block.settings.icon3 }}</span></a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+section.meet-our-founder {
+    padding: 64px 24px 72px;
+}
+.founder-grid {
+    max-width: 1317px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 64px auto 0 auto;
+    gap: 21px;
+}
+.meetFounder.funder-item {
+    background: #F1FFF6;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #00B764;
+}
+.meetFounder.funder-item img {
+    width: 281px;
+    height: auto;
+}
+.founder-detailblock {
+    padding: 34.5px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.founderSocial {
+    display: flex;
+    gap: 16px;
+}
+.intro-founder h3 {
+    font-size: 26px;
+    line-height: 26px;
+    font-weight: 600;
+    color: #042F18;
+    margin-bottom: 8px;
+}
+.intro-founder p {
+    font-size: 14px;
+    color: #2B2928;
+    line-height: 21px;
+    letter-spacing: 0;
+}
+.founderTitle {
+    font-size: 16px;
+    color: #00B764;
+    line-height: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+@media screen and (max-width: 600px){
+  .founder-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .meetFounder.funder-item {
+        border-radius: 16px !important;
+    }
+}
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Meet Our Founders",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "repeater",
+        "name" : "Founder",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Founder Image"
+          },
+          {
+            "type": "text",
+            "id": "name",
+            "label": "Founder Name"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Designation"
+          },
+          {
+            "type": "textarea",
+            "id": "desc",
+            "label": "Founder Introduction"
+          },
+          {
+            "type": "textarea",
+            "id": "icon1",
+            "label": "Icon 1"
+          },
+          {
+            "type": "url",
+            "id": "link1",
+            "label": "Link 1"
+          },
+          {
+            "type": "textarea",
+            "id": "icon2",
+            "label": "Icon 2"
+          },
+          {
+            "type": "url",
+            "id": "link2",
+            "label": "Link 2"
+          },
+          {
+            "type": "textarea",
+            "id": "icon3",
+            "label": "Icon 3"
+          },
+          {
+            "type": "url",
+            "id": "link3",
+            "label": "Link 3"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Meet Our Founders"
+      }
+    ]
+  }
+{% endschema %}

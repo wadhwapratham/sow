@@ -1,0 +1,18 @@
+
+/* @media screen and (min-width: 651px){
+  #product-8405136179428 #shopify-section-template--17646078820580__know_your_bar_KBBHJq .image-over-text-block.block-row-second {
+    bottom: 90px;
+    top: 0;
+    margin: auto;
+    height: fit-content;
+  }
+   
+} */
+
+@media screen and (max-width:480px){
+  #product-8405136179428 .product-image-wrapper {
+      height: 340vw;
+  }
+
+}
+

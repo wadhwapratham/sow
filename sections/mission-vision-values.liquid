@@ -1,0 +1,206 @@
+<section class="mission-vision-values">
+  <div class="mission-values-container">
+    <div class="section-mission-block mission-andVisions">
+      <div class="section-inner-block">
+        <h3>{{ section.settings.head }}</h3>
+        {% for block in section.blocks %}
+          {% if block.type == 'mission' %}
+            <h4>{{ block.settings.mission_head }}</h4>
+            <p>{{ block.settings.description }}</p>
+          {% endif %}
+        {% endfor %}
+        {% if section.settings.img != blank %}<img src="{{ section.settings.img | img_url:'' }}" alt="{{ section.settings.img.alt }}" width="100" height="100" loading="lazy">{% endif %}
+      </div>
+    </div>
+    <div class="section-mission-block values-and-mission">
+      <div class="section-inner-block">
+        <h3>{{ section.settings.second_head }}</h3>
+        {% for block in section.blocks %}
+          {% if block.type == 'values' %}
+            <h4>{{ block.settings.values_head }}</h4>
+            <p>{{ block.settings.value_description }}</p>
+          {% endif %}
+        {% endfor %}
+        {% if section.settings.img_val != blank %}<img src="{{ section.settings.img_val | img_url:'' }}" alt="{{ section.settings.img_val.alt }}" width="100" height="100" loading="lazy">{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.mission-values-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.section-mission-block {
+    padding: 64px 54px;
+    position: relative;
+}
+.section-mission-block.values-and-mission .section-inner-block {
+    margin-left: 0;
+    margin-right: auto;
+}
+.section-mission-block.mission-andVisions {
+    background: #F0FFF6;
+}
+.section-mission-block.mission-andVisions h3,.section-mission-block.mission-andVisions h4{
+    color: #054327;
+}
+.section-mission-block.values-and-mission {
+    background: #FFF1DC;
+}
+.section-mission-block.values-and-mission h3,.section-mission-block.values-and-mission h4{
+    color: #7B3B00;
+}
+.section-inner-block h3 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: 700;
+    line-height: 54px;
+    margin-bottom: 44px;
+}
+.section-inner-block h4 {
+    font-size: 26px;
+    line-height: 26px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    padding-bottom: 16px;
+    position: relative;
+}
+.section-mission-block.mission-andVisions .section-inner-block p:not(:last-child) {
+    margin-bottom: 40px;
+}
+.section-mission-block.values-and-mission .section-inner-block p:not(:last-child) {
+    margin-bottom: 24px;
+}
+.section-inner-block {
+    max-width: 612px;
+    margin-left: auto;
+}
+.section-inner-block h4:after {
+    content: "";
+    height: 6px;
+    border-radius: 8px;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+.section-mission-block.mission-andVisions .section-inner-block h4:after{
+    background: #D4FFE8;
+    width: 104px;
+}
+.section-mission-block.values-and-mission .section-inner-block h4:after{
+    background: #FFCE9E;
+    width: 221px;
+}
+
+.section-inner-block img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
+@media screen and (max-width: 900px){
+  .mission-values-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .section-inner-block img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .section-mission-block {
+    padding: 64px 24px;
+  }
+  .section-inner-block h3 {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 36px;
+  }
+  .section-inner-block h4 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .section-inner-block p {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: #000;
+  }
+}
+{% endstylesheet %}
+  
+
+{% schema %}
+  {
+    "name": "Mission, Vision & Values",
+    "settings": [
+      {
+        "type": "text",
+        "id": "head",
+        "label": "Block 1 Heading"
+      },
+      {
+        "type": "image_picker",
+        "label": "Block Image",
+        "id": "img"
+      },
+      {
+        "type": "text",
+        "id": "second_head",
+        "label": "Block 2 Heading"
+      },
+      {
+        "type": "image_picker",
+        "label": "Block 2 Image",
+        "id": "img_val"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "mission",
+        "name" : "Mission",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "text",
+            "id": "mission_head",
+            "label": "Block Head"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Block Description"
+          }
+        ]
+      },
+      {
+        "type": "values",
+        "name" : "Values",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "text",
+            "id": "values_head",
+            "label": "Block Head"
+          },
+          {
+            "type": "textarea",
+            "id": "value_description",
+            "label": "Block Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Mission, Vision & Values"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,194 @@
+{% if template contains 'product' %}
+{% if product.metafields.custom.product_testimonial != blank %}
+<section class="product-customer-testimonial">
+  <div class="wrpper-teestimonial">
+    <div class="ethics-header" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="product-testimonial">
+      {% for item in product.metafields.custom.product_testimonial.value %}
+      <div class="testimonial-item">
+        <div class="testimonial-inner">
+          <!-- <div class='ratings'>{{ item.star_rating }}</div> -->
+          <p class="review_product">{{ item.review }}</p>
+          <h3>{{ item.author }}</h3>
+          <span class="authorDesg">{{ item.designation }}</span>
+        </div>
+        <img class="review-testimonial-card" src="https://cdn.shopify.com/s/files/1/0691/6715/3380/files/Review_Cards-svg.png?v=1719853556" width="auto" height="auto" loading="lazy" alt="testimonial review card">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% else %}
+<section class="product-customer-testimonial index-reviews">
+  <div class="wrpper-teestimonial">
+    <div class="ethics-header" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="product-testimonial">
+      {% for block in section.blocks %}
+      <div class="testimonial-item">
+        <div class="testimonial-inner">
+          <!-- <div class='ratings'>{{ block.settings.star_rating }}</div> -->
+          <p class="review_product">{{ block.settings.review }}</p>
+          <h3>{{ block.settings.author }}</h3>
+          <span class="authorDesg">{{ block.settings.designation }}</span>
+        </div>
+        <img class="review-testimonial-card" src="https://cdn.shopify.com/s/files/1/0691/6715/3380/files/Review_Cards-svg.png?v=1719853556" width="auto" height="auto" loading="lazy" alt="testimonial review card">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{% stylesheet %}
+.product-customer-testimonial.index-reviews{
+  background:#F1FFF6;
+}
+section.product-customer-testimonial {
+    padding: 64px 0 72px;
+}
+.testimonial-inner {
+    position: absolute;
+    max-width: 338px;
+    text-align: center;
+    left: 0;
+    right: 0;
+    top: 0px;
+    bottom: 10px;
+    margin: auto;
+    height: fit-content;
+    padding: 0 20px;
+}
+p.review_product {
+    font-size: 16px;
+    line-height: 24px;
+    color: #054327;
+    margin: 10px 0 20px 0;
+}
+.testimonial-item {
+    position: relative;
+    /* max-width: max-content; */
+}
+img.review-testimonial-card {
+    width: 100%;
+    height: auto;
+}
+.product-testimonial {
+    display: flex;
+    margin-top: 36px;
+}
+.wrpper-teestimonial.section-width {
+    overflow: hidden;
+}
+.product-testimonial.slick-initialized.slick-slider {
+    margin: 36px  0 0 0;
+}
+.testimonial-inner h3 {
+    color: #EC7100;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+    font-weight: 600;
+}
+span.authorDesg{
+  color: #042F18;
+  font-size: 12px;
+  line-height: 18px;
+}
+p.review_product {
+    font-size: 16px;
+    line-height: 24px;
+    color: #054327;
+    margin: 10px 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    padding: 0 20px;
+}
+.product-testimonial button.slick-prev.slick-arrow {
+    left: 30px;
+}
+.product-testimonial button.slick-next.slick-arrow {
+    right: 30px;
+}
+.product-testimonial button.slick-arrow {
+    width: 45px;
+    height: 45px;
+    background: #FFC773;
+    border-radius: 40px;
+}
+.product-testimonial button.slick-arrow:before {
+    color: #7B3B00;
+}
+
+@media screen and (max-width: 525px){
+  p.review_product {
+    font-size: 12px;
+    line-height: 16px;
+    margin: 20px 0 10px;
+    padding: 0 30px;
+  }
+  .testimonial-inner h3 {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .product-testimonial button.slick-next.slick-arrow {
+    right: 10px;
+  }
+  .product-testimonial button.slick-prev.slick-arrow {
+    left: 10px;
+  }
+  section.product-customer-testimonial {
+    padding: 48px 0 64px;
+  }
+}
+{% endstylesheet %}
+  
+{% schema %}
+  {
+    "name": "Product Testimonial",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default" : "What our Customers Say"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "repeater",
+        "name": "Review",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "review",
+            "label": "Testimonial"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author Name"
+          },
+          {
+            "type": "textarea",
+            "id": "designation",
+            "label": "Author designation"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Testimonial"
+      }
+    ]
+  }
+{% endschema %}

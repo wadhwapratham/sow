@@ -1,0 +1,219 @@
+<section class="our-produc-section">
+  <div class="product-wrapper-container section-width">
+    <div class="ethics-header" data-aos="fade-up" data-aos-duration="500">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="our-prducts" data-aos="fade-up" data-aos-duration="1000">
+      {% for block in section.blocks %}
+        {%- assign product = block.settings.product -%}
+        <div class="product-item">
+          <div class="product-image">
+            <a href="{{ product.url }}">
+              <img src="{{ product | img_url:'500x' }}" loading="lazy" width="100" height="100" alt="{{ product.title }}">
+            </a>
+          </div>
+          <div class="product-infor-box">
+            <a href="{{ product.url }}">
+              <h3>{{ product.title }}</h3>
+            </a>
+            {% if block.settings.ing1 != blank or block.settings.ing2 != blank or block.settings.ing3 != blank or block.settings.ing4 != blank %}
+            <!-- <div class="ingredient-product-wrapper">
+              {% if block.settings.ing1 != blank %}<img src="{{ block.settings.ing1 | img_url:'' }}" width="64" height="64" alt="{{ block.settings.ing1.alt }}" loading="lazy">{% endif %}
+              {% if block.settings.ing2 != blank %}<img src="{{ block.settings.ing2 | img_url:'' }}" width="64" height="64" alt="{{ block.settings.ing2.alt }}" loading="lazy">{% endif %}
+              {% if block.settings.ing3 != blank %}<img src="{{ block.settings.ing3 | img_url:'' }}" width="64" height="64" alt="{{ block.settings.ing3.alt }}" loading="lazy">{% endif %}
+              {% if block.settings.ing4 != blank %}<img src="{{ block.settings.ing4 | img_url:'' }}" width="64" height="64" alt="{{ block.settings.ing4.alt }}" loading="lazy">{% endif %}
+            </div> -->
+            {% endif %}
+            <a href="{{ product.url }}" class="product-visit-btn button-primary-no-bg">{{ block.settings.btn_label }}</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+{% stylesheet %}
+section.our-produc-section {
+    padding: 64px 0 72px 0;
+}
+.our-prducts {
+    display: flex;
+}
+
+.product-image img {
+    max-width: 332px;
+    width: 100%;
+    border-radius: 18px;
+    height: 332px;
+    object-fit: cover;
+}
+.product-infor-box h3 {
+    color: #042F18;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 26px;
+    text-align: center;
+    min-height: 52px;
+}
+.product-infor-box {
+    padding: 36px 21px 0 21px;
+}
+.ingredient-product-wrapper {
+    display: flex;
+    gap: 10px;
+    max-width: 286px;
+    justify-content: center;
+    align-items: center;
+    margin: 24px 0 36px 0;
+}
+.product-item {
+    padding: 0 41px;
+}
+.our-prducts {
+    max-width: 1277px;
+    margin: 64px auto 0;
+}
+a.product-visit-btn.button-primary-no-bg {
+    margin: 36px auto 0!important;
+    text-align: center;
+}
+
+.our-produc-section .slick-arrow {
+    top: 30%;
+    background: #FFC773 !important;
+    width: 48px;
+    height: 48px;
+    border-radius: 50px;
+    color: #7B3B00;
+}
+.our-produc-section .slick-prev {
+    left: 20px;
+}
+.our-produc-section .slick-arrow {
+    right: 20px;
+}
+.our-produc-section .slick-prev:before,.our-produc-section .slick-next:before {
+    font-size: 24px;
+    opacity: 1;
+    color: #7B3B00;
+}
+button.slick-arrow.slick-disabled {
+    display: none;
+}
+@media screen and (max-width: 1024px){
+  .product-infor-box h3 {
+    font-size: 19px;
+  }
+  .ingredient-product-wrapper img {
+    width: 45px;
+    height: 45px;
+  }
+  .ingredient-product-wrapper {
+    margin: 19px 0px 30px;
+  }
+}
+
+@media screen and (max-width: 525px){
+  .product-item {
+    padding: 0 20px 0 0;
+  }
+  .product-image img {
+    height: 280px;
+  }
+  .product-wrapper-container.section-width {
+    padding-right: 0;
+  }
+  .our-prducts {
+    margin: 36px auto 0;
+  }
+  .our-produc-section .slick-arrow {
+    right: 10px;
+  }
+  .product-infor-box {
+    padding: 16px 16px 0;
+  }
+  .product-infor-box h3 {
+    font-size: 18px;
+    line-height: normal;
+    min-height: auto;
+  }
+  .ingredient-product-wrapper {
+    margin: 16px 0 24px;
+  }
+  .ingredient-product-wrapper img {
+    width: 44px;
+    height: 44px;
+  }
+  section.our-produc-section {
+    padding: 48px 0;
+  }
+  .our-produc-section .slick-prev {
+    left: 10px;
+  }
+  a.product-visit-btn.button-primary-no-bg {
+    margin:24px auto 0!important;
+  }
+}
+  
+  
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Our Products",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default" : "Our Products"
+      }
+    ],
+    "blocks": [
+      {
+        "name" : "Product",
+        "type": "repeater",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+          {
+            "type": "image_picker",
+            "id": "ing1",
+            "label": "Ingredient Image 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "ing2",
+            "label": "Ingredient Image 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "ing3",
+            "label": "Ingredient Image 3"
+          },
+          {
+            "type": "image_picker",
+            "id": "ing4",
+            "label": "Ingredient Image 4"
+          },
+          {
+            "type": "text",
+            "id": "btn_label",
+            "label": "Button Label",
+            "default" : "Shop Now"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Our Products"
+      }
+    ]
+  }
+{% endschema %}

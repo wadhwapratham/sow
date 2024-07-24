@@ -1,0 +1,54 @@
+<section class="section--only-image">
+  <div class="ethics-header">
+    <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+  </div>
+  <div class="section-container-image">
+    <picture>
+      <source srcset="{{ section.settings.d_img | img_url:'' }}" media="(min-width: 651px)">
+      <source srcset="{{ section.settings.m_img | img_url:'' }}" media="(max-width: 650px)">
+      <img src="{{ section.settings.d_img | img_url:'' }}" width="100" height="100" loading="lazy" alt="{{ section.settings.d_img.alt }}">
+    </picture>
+  </div>
+</section>
+
+{% stylesheet %}
+.section-container-image {
+    padding-top: 64px;
+}
+.section-container-image img {
+    width: 100%;
+    height: auto;
+}
+section.section--only-image {
+    padding: 64px 0 0 0;
+}
+{% endstylesheet %}
+  
+{% schema %}
+  {
+    "name": "Section only image",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default" : "Our Product Philosophy"
+      },
+      {
+        "type": "image_picker",
+        "id": "d_img",
+        "label": "Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "m_img",
+        "label": "Mobile Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Section only image"
+      }
+    ]
+  }
+{% endschema %}

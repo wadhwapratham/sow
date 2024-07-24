@@ -1,0 +1,145 @@
+<section class="shop-by-pack-section">
+  <div class="shop-by-wrapper">
+    <div class="ethics-header">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="ethics-card-wrapper">
+      {% for block in section.blocks %}
+        <div class="ethics-Card-item" style="background-color: {{ block.settings.card_color }}">
+          <img src="{{ block.settings.img | img_url: '300x' }}" width="100" height="100" loading="lazy" alt="{{ block.settings.title }}">
+          <h3>{{ block.settings.title }}</h3>
+          {% if block.settings.subhead != blank %}<p>{{ block.settings.subhead }}</p>{% endif %}
+          {% if block.settings.btn_url != blank %}<a href="{{ block.settings.btn_url }}" class="button-secondary">{{ block.settings.btnTxt }}</a>{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+.ethics-card-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 63px;
+    margin-bottom: 72px;
+}
+.ethics-Card-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 490px;
+}
+.ethics-Card-item img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+.ethics-Card-item h3 {
+    color: #054327;
+    font-size: 28px;
+    font-family: 'Mochiy Pop One';
+    line-height: 40px;
+    margin-bottom: 8px;
+}
+.ethics-Card-item p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #433F3E;
+}
+.ethics-Card-item a {
+    margin: 24px 0 0 0 !important;
+}
+
+@media screen and (max-width: 1024px){
+  .ethics-Card-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .ethics-card-wrapper {
+    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .ethics-card-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 8px;
+    margin-top: 48px;
+    margin-bottom: 64px;
+  }
+  .ethics-Card-item h3 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .ethics-Card-item img {
+    width: 240px;
+    height: 240px;
+  }
+} 
+{% endstyle %}
+{% schema %}
+  {
+    "name": "Shop By Pack",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default" : "Shop By Pack"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name" : "Pack",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "color",
+            "id": "card_color",
+            "label": "Card Color"
+          },
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Pack Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Pack Title"
+          },
+          {
+            "type": "textarea",
+            "id": "subhead",
+            "label": "Subhead"
+          },
+          {
+            "type": "url",
+            "id": "btn_url",
+            "label": "Button Link"
+          },
+          {
+            "type": "text",
+            "id": "btnTxt",
+            "label": "Button Label",
+            "default" : "View More"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Shop By Pack"
+      }
+    ]
+  }
+{% endschema %}

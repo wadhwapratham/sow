@@ -1,0 +1,211 @@
+<section class="insider-guide-section">
+  <div class="section-insider-guide-wrapper section-width">
+     <div class="ethics-header" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+       <p>{{ section.settings.subhead }}</p>
+    </div>
+    <div class="insider-guide slider-insider">
+      {% for block in section.blocks %}
+      <div class="slider-item-guide">
+        {% assign article = block.settings.article %}
+        <div class="insider-inner">
+          <a href='{{ article.url }}'>
+          <img src="{{ article.image.src | img_url:'400x' }}" loading="lazy" width="100" height="100" alt="{{ article.title }}">
+          </a>
+          <div class="insider-content">
+            <h3>{{ article.title }}</h3>
+            {% if article.excerpt %}<p>{{ article.excerpt }}</p>{% endif %}
+            <div class="date-insider"><span>{% render 'icon-calender' %}</span><span>{{ article.published_at | time_tag: format: 'date' }}</span></div>
+            <a href='{{ article.url }}' class="button-primary-no-bg">View More</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+{% stylesheet %}
+section.insider-guide-section {
+    overflow: hidden;
+    background: #ECFFF7;
+}
+.insider-guide {
+    display: flex;
+}
+.insider-inner img {
+    width: 100%;
+    height: 338px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+.slider-item-guide {
+    padding: 0 15px;
+}
+.insider-content h3 {
+    font-size: 25.92px;
+    color: #054327;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    height: 41px;
+    white-space: nowrap;
+    overflow: hidden;
+    letter-spacing: -1px;
+}
+.insider-content p {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #2B2928;
+    margin: 0 0 10px 0;
+    height: 51px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.date-insider span:first-child {
+    width: 20px;
+    height: 20px;
+}
+.date-insider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.date-insider span:last-child {
+    color: #433F3E;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Poppins';
+}
+.insider-content {
+    margin-top: 20px;
+}
+.section-insider-guide-wrapper.section-width {
+    padding-right: 0;
+}
+.insider-guide {
+    padding-top: 60px;
+}
+.insider-content a {
+    margin-top: 30px;
+    font-size: 16px;
+    height: 55px;
+}
+.section-insider-guide-wrapper {
+    padding-top: 64px;
+    padding-bottom: 72px;
+} 
+
+
+.section-insider-guide-wrapper .slick-prev,.section-insider-guide-wrapper  .slick-next {
+    top: 35%;
+}
+
+  .insider-guide-section button.slick-arrow{
+    width: 48px;
+    height: 48px;
+    background: #FFC773;
+    border-radius: 50px;
+    top: 37%;
+}
+.insider-guide-section .slick-prev:before,.insider-guide-section .slick-next:before {
+    font-size: 24px;
+    color: #7B3B00;
+}
+button.slick-prev.slick-arrow.slick-disabled {
+    opacity: 0;
+} 
+@media screen and (min-width: 526px){
+  .section-insider-guide-wrapper .slick-prev {
+      left: 30px;
+  }
+  .section-insider-guide-wrapper .slick-next {
+      right: 30px;
+  }
+
+}
+
+  
+@media screen and (max-width: 768px){
+  .section-insider-guide-wrapper.section-width {
+      padding-right: 30px;
+      padding-left: 30px;
+  }
+}
+
+@media screen and (max-width: 525px){
+  .insider-guide-section  button.slick-arrow {
+    top: 34%;
+  }
+  .slider-item-guide {
+      padding: 0 10px;
+  }
+  .insider-guide {
+    padding-top: 30px;
+  }
+  .section-insider-guide-wrapper.section-width {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .insider-content h3 {
+    font-size: 20px;
+    height: 50px;
+  }
+  .insider-content p {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 25px;
+  }
+  .section-insider-guide-wrapper .slick-next {
+    right: -15px;
+  }
+  .section-insider-guide-wrapper .slick-prev {
+    left: -15px;
+  }
+  .insider-content p {
+    height: 40px;
+  }
+  .section-insider-guide-wrapper {
+    padding-top: 48px;
+    padding-bottom: 64px;
+} 
+}
+{% endstylesheet %}
+
+
+{% schema %}
+  {
+    "name": "Insider Guide",
+    "settings": [
+      {
+        "type": "text",
+        "id" : "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "subhead",
+        "label": "Sub Head"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name" : "Slide",
+        "settings": [
+          {
+            "type": "article",
+            "id": "article",
+            "label": "Article"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Insider Guide"
+      }
+    ]
+  }
+{% endschema %}

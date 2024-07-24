@@ -1,0 +1,223 @@
+{% assign sourceArray = product.selected_or_first_available_variant.metafields.custom.sourced_from %}
+{% assign usageArray = product.selected_or_first_available_variant.metafields.custom.usage %}
+{% assign featuressArray = product.selected_or_first_available_variant.metafields.custom.features %}
+{% assign ingredientsArray = product.selected_or_first_available_variant.metafields.custom.ingredients %}
+{% assign vitaminArray = product.selected_or_first_available_variant.metafields.custom.vitamins %}
+<section class="nutritional-facts">
+  <div class="nutritional-wrappper">
+    <div class="ethics-header">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="nutri-guide-container" id="nutritionTabs">
+      <div class="nutri-tabs">
+        {% if ingredientsArray != blank %}<button type="button" id="ingredients" class="pdp-nutri-tabs active">Ingredients</button>{% endif %}
+        {% if vitaminArray != blank %}<button type="button" id="vitamins" class="pdp-nutri-tabs active">Vitamins</button>{% endif %}
+        {% if featuressArray != blank %}<button type="button" id="features" class="pdp-nutri-tabs{% if ingredientsArray == blank and vitaminArray == blank%} active{% endif %}">Features</button>{% endif %}
+        {% if usageArray != blank %}<button type="button" id="usage" class="pdp-nutri-tabs">Usage</button>{% endif %}
+        {% if sourceArray != blank %}<button type="button" id="source" class="pdp-nutri-tabs">Sourced From</button>{% endif %}
+      </div>
+      {% assign bgImg = product.selected_or_first_available_variant.metafields.custom.nutritional_background %}
+      <div class="nutri-tab-tabcontent" {% if bgImg != blank %}style="background-image: url('{{ bgImg | img_url:'' }}')"{% endif %}>
+        
+        {% if ingredientsArray != blank and vitaminArray == blank %}
+        <div class="tab-contant-container active" data-id="ingredients">
+          {% for ingredient in ingredientsArray.value %}
+            {% if forloop.index == 1 %}
+            {% assign deskIng = ingredient | img_url:'' %}
+            {% endif %}
+            {% if forloop.index == 2 %}
+            {% assign mobIng = ingredient | img_url:'' %}
+            {% endif %}
+          {% endfor %}
+          <picture>
+            <source srcset="{{ deskIng }}" media="(min-width: 769px)">
+            <source srcset="{{ mobIng }}" media="(max-width: 768px)">
+            <img src="{{ deskIng }}" alt="{{ product.title }} ingredients" loading="lazy" width="100" height="100">
+          </picture>
+        </div>
+        {% endif %}
+        
+        {% if vitaminArray != blank and ingredientsArray == blank %}
+        <div class="tab-contant-container active" data-id="vitamins">
+          {% for vitamin in vitaminArray.value %}
+            {% if forloop.index == 1 %}
+            {% assign deskvitamin = vitamin | img_url:'' %}
+            {% endif %}
+            {% if forloop.index == 2 %}
+            {% assign mobvitamin = vitamin | img_url:'' %}
+            {% endif %}
+          {% endfor %}
+          <picture>
+            <source srcset="{{ deskvitamin }}" media="(min-width: 769px)">
+            <source srcset="{{ mobvitamin }}" media="(max-width: 768px)">
+            <img src="{{ deskvitamin }}" alt="{{ product.title }} vitamin" loading="lazy" width="100" height="100">
+          </picture>
+        </div>
+        {% endif %}
+
+        {% if featuressArray != blank %}
+        <div class="tab-contant-container{% if ingredientsArray == blank and vitaminArray == blank%} active{% endif %}" data-id="features">
+          {% for feature in featuressArray.value %}
+            {% if forloop.index == 1 %}
+            {% assign deskFeature = feature | img_url:'' %}
+            {% endif %}
+            {% if forloop.index == 2 %}
+            {% assign mobFeature = feature | img_url:'' %}
+            {% endif %}
+          {% endfor %}
+          <picture>
+            <source srcset="{{ deskFeature }}" media="(min-width: 769px)">
+            <source srcset="{{ mobFeature }}" media="(max-width: 768px)">
+            <img src="{{ deskFeature }}" alt="{{ product.title }} features" loading="lazy" width="100" height="100">
+          </picture>
+        </div>
+        {% endif %}
+
+        {% if usageArray != blank %}
+        <div class="tab-contant-container" data-id="usage">
+          {% for usage in usageArray.value %}
+            {% if forloop.index == 1 %}
+            {% assign deskUsage = usage | img_url:'' %}
+            {% endif %}
+            {% if forloop.index == 2 %}
+            {% assign mobUsage = usage | img_url:'' %}
+            {% endif %}
+          {% endfor %}
+          <picture>
+            <source srcset="{{ deskUsage }}" media="(min-width: 769px)">
+            <source srcset="{{ mobUsage }}" media="(max-width: 768px)">
+            <img src="{{ deskUsage }}" alt="{{ product.title }} usage" loading="lazy" width="100" height="100">
+          </picture>
+        </div>
+        {% endif %}
+
+        {% if sourceArray != blank %}
+        <div class="tab-contant-container" data-id="source">
+          {% for source in sourceArray.value %}
+            {% if forloop.index == 1 %}
+            {% assign deskSource = source | img_url:'' %}
+            {% endif %}
+            {% if forloop.index == 2 %}
+            {% assign mobSource = source | img_url:'' %}
+            {% endif %}
+          {% endfor %}
+          <picture>
+            <source srcset="{{ deskSource }}" media="(min-width: 769px)">
+            <source srcset="{{ mobSource }}" media="(max-width: 768px)">
+            <img src="{{ deskSource }}" alt="{{ product.title }} source from" loading="lazy" width="100" height="100">
+          </picture>
+        </div>
+        {% endif %}
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% stylesheet %}
+section.nutritional-facts {
+    background: #E6FFF3;
+    padding: 48px 0 0 0;
+}
+.nutri-tabs {
+    display: flex;
+    margin-top: 24px;
+}
+.pdp-nutri-tabs {
+    min-width: 25%;
+    width: 100%;
+    height: 82px;
+    padding: 28px 0;
+    border-top: 1.6px solid #07FF8E;
+    border-bottom: 1.6px solid #07FF8E;
+    border-left: .8px solid #07FF8E;
+    border-right: .8px solid #07FF8E;
+    font-size: 26px;
+    font-weight: 600;
+    color: #1B4B35;
+    background: transparent;
+    line-height: 26px;
+    font-family: 'Poppins';
+    transition: .5s ease;
+    cursor: pointer;
+}
+.pdp-nutri-tabs:hover{
+  background: #A5FFD6;
+}
+.pdp-nutri-tabs.active{
+  background: #A5FFD6;
+}
+.nutri-tab-tabcontent {
+    /* padding: 64px 61px; */
+    background-size: cover;
+    min-height: 400px;
+}
+.tab-contant-container.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tab-contant-container {
+    display: none;
+}
+.tab-contant-container img {
+    width: 100%;
+    height: auto;
+}
+
+@media screen and (max-width: 600px){
+  .nutri-tabs {
+    flex-wrap: wrap;
+  }
+  .pdp-nutri-tabs {
+    width: 50%;
+    height: 68px;
+    padding: 22px 0;
+    border-top: .8px solid #07FF8E;
+    border-bottom: .8px solid #07FF8E;
+    border-left: .8px solid #07FF8E;
+    border-right: .8px solid #07FF8E;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+{% endstylesheet %}
+
+
+<script>
+$(document).ready(function(){
+  $('.pdp-nutri-tabs').click(function(){
+    $(this).addClass('active');
+    $(this).siblings().removeClass('active');
+    var nutriId = $(this).attr('id');
+    $('.tab-contant-container').each(function(){
+      var contentId = $(this).attr('data-id');
+      if(contentId == nutriId){
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+      }
+    })
+    
+  });  
+})
+</script>
+ 
+{% schema %}
+  {
+    "name": "Nutritional Facts",
+    "settings": [
+      {
+        "type" : "text",
+        "id" : "heading",
+        "label" : "Section Heading",
+        "default" : "NUTRITIONAL FACTS"
+      }
+    ],
+    "presets" : [
+      {
+        "name": "Nutritional Facts"
+      }
+    ]
+  }
+{% endschema %}

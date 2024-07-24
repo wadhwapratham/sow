@@ -1,0 +1,181 @@
+<section class="our-story">
+  <div class="ethics-header" data-aos="fade-up" data-aos-duration="700">
+      <h2 class="section-title h2">{{ section.settings.heading }}</h2>
+    </div>
+  <div class="section-wrapper section-width">
+    <div class="sectionstory-image">
+      <img src="{{ section.settings.image | img_url:'600x' }}" width="100" height="100" loading="lazy" alt="{{ section.settings.title }}">
+    </div>
+    <div class="section-content-story">
+      <h2 data-aos="fade-up" data-aos-duration="700">{{ section.settings.title }}</h2>
+      <p class="content_half">{{ section.settings.content }}</p>
+      <!-- <button type="button" class="readmore toggleread">Read More</button> -->
+      <p class="content_secondhalf">{{ section.settings.content2 }}</p>
+      <!-- <button type="button" class="readless toggleread">Read Less</button> -->
+      <a href="{{ section.settings.link }}" class='button-secondary'>Contact Us</a>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+section.our-story {
+    background: #fffaf5;
+}
+.our-story a.button-secondary {
+    margin: 36px 0 0;
+}
+.our-story .ethics-header{
+  display: none;
+}
+.section-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-top: 64px;
+    padding-bottom: 72px;
+    gap: 10px;
+    align-items: center;
+}
+.sectionstory-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 28px;
+}
+.section-content-story {
+    padding: 0 40px;
+}
+.section-content-story h2 {
+    font-family: Mochiy Pop one;
+    font-size: 38px;
+    color: #054327;
+    line-height: 52.13px;
+    margin-bottom: 40px;
+}
+.section-content-story p {
+    font-size: 16px;
+    font-family: 'Poppins';
+    line-height: 24px;
+    color: #7B3B00;
+}
+
+button.toggleread {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    padding: 0;
+    color: #00B764;
+    text-transform: uppercase;
+    font-family: 'Poppins';
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    display:none;
+}
+
+  .section-content-story .content_secondhalf {
+    display: none;
+  }
+@media screen and (max-width: 1280px){
+  button.toggleread.readmore {
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 1024px){
+  .section-content-story {
+    padding: 0 20px;
+  }
+  .section-content-story h2 {
+    margin-bottom: 20px;
+  }
+  .section-content-story p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .section-wrapper {
+    grid-template-columns: repeat(1, 1fr);        
+    gap: 30px;
+  }
+  .our-story .ethics-header{
+  display: block;
+  }
+  .section-content-story h2 {
+    display: none;
+  }
+  .section-content-story .content_secondhalf {
+    display: block;
+  }
+  p.content_half {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 525px){
+  .section-wrapper {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .section-content-story {
+    padding: 0 0px;
+  }
+  .section-content-story p {
+    font-size: 16px;
+    text-align: center;
+  }
+  button.toggleread {
+    margin: 20px auto 0;
+  }
+  .our-story a.button-secondary {
+    margin: 24px auto 0 !important;
+  }
+  section.our-story {
+    padding: 48px 0 40px 0;
+  }
+}
+{% endstylesheet %}
+  
+{% schema %}
+  {
+    "name": "Our Story",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default" : "Our Story"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section title"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Section Content"
+      },
+      {
+        "type": "textarea",
+        "id": "content2",
+        "label": "Section Content Part 2"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Button Link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Our Story"
+      }
+    ]
+  }
+{% endschema %}

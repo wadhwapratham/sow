@@ -1,0 +1,135 @@
+{% assign faq = product.metafields.custom.product_faq_s %}
+{% if faq != blank %}
+<section class="product-fq-section">
+  <div class="section-width product-faq-wrapper">
+    <div class="faq-img">
+        <img src="{{ section.settings.faq_img | img_url:'900x' }}" width="100" height="100" loading="lazy" alt="{{ product.title }} Faq's">
+    </div>
+    <div class="faq-main-container">
+      <h2>{{ section.settings.head }}</h2>
+      <div class="faq-q-and-a">
+        {% for item in faq.value %}
+          <div class="faq-item">
+            <h3 class="faq-question"><span>{{ item.question }}</span><span class="icon-faq">{% render 'icon-chevron' %}</span></h3>
+            <p class="faq-answer">{{ item.answer }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% stylesheet %}
+section.product-fq-section {
+    padding: 48px 0;
+}
+.product-faq-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+.faq-main-container h2 {
+    font-size: 36px;
+    line-height: 54px;
+    color: #042F18;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+}
+.faq-q-and-a {
+    margin-top: 36px;
+}
+.faq-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 24px;
+}
+.faq-main-container {
+    display: block;
+    padding: 0 20px;
+}
+.faq-item h3 {
+    font-size: 16px;
+    font-family: 'Poppins';
+    color: #2B2928;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: .576px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #FF8103;
+    cursor: pointer;
+}
+span.icon-faq,span.icon-faq svg {
+    width: 48px;
+    height: 48px;
+}
+p.faq-answer {
+    padding: 20px 32px;
+    margin: 0;
+    letter-spacing: .576px;
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #2B2928;
+    line-height: 24px;
+    display: none;
+}
+
+@media screen and (max-width: 768px){
+  .product-faq-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 28px;
+  }
+  .faq-main-container h2 {
+    font-size: 19px;
+    line-height: normal;
+  }
+}
+
+@media screen and (max-width: 525px){
+  .section-width.product-faq-wrapper {
+    padding: 0;
+  }
+  .faq-img {
+    padding: 0 24px;
+    height: 360px;
+  }
+  .faq-main-container {
+    padding: 0;
+  }
+  .faq-q-and-a {
+    margin-top: 28px;
+  }
+  section.product-fq-section {
+    padding: 48px 0 64px;
+  }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Product Faq's",
+    "settings": [
+      {
+        "type" : "text",
+        "id" : "head",
+        "label" : "Heading"
+      },
+      {
+        "type" : "image_picker",
+        "id" : "faq_img",
+        "label" : "Faq Image"
+      }
+    ],
+    "presets" : [
+      {
+        "name": "Product Faq's"
+      }
+    ]
+  }
+{% endschema %}

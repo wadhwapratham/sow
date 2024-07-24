@@ -1,0 +1,607 @@
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="contact section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- else -%}
+      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
+    {%- endif -%}
+    {%- liquid
+      assign contact_form_class = 'isolate'
+      if settings.animations_reveal_on_scroll
+        assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
+      endif
+    -%}
+    <div class="form-contact-wrapper">
+      <div class="social-wrapper-contact">
+        <h2>Social</h2>
+        <ul>
+          <li>
+            <a href="#" title="facebook">{% render 'facebook' %}</a>
+          </li>
+          <li>
+            <a href="#" title="instagram">{% render 'instagram' %}</a>
+          </li>
+          <li>
+            <a href="#" title="twitter">{% render 'twitter' %}</a>
+          </li>
+          <li>
+            <a href="#" title="linkedin">{% render 'linkedin' %}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="contact-form-wrapper">
+        {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+          {%- if form.posted_successfully? -%}
+            <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+              {% render 'icon-success' %}
+              {{ 'templates.contact.form.post_success' | t }}
+            </h2>
+          {%- elsif form.errors -%}
+            <div class="form__message">
+              <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+                {% render 'icon-error' %}
+                {{ 'templates.contact.form.error_heading' | t }}
+              </h2>
+            </div>
+            <ul class="form-status-list caption-large" role="list">
+              <li>
+                <a href="#ContactForm-email" class="link">
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email }}
+                </a>
+              </li>
+            </ul>
+          {%- endif -%}
+          <div class="contact__fields">
+            <div class="form_field">
+              <label class="field__labell" for="ContactForm-name">First Name*</label>
+              <input
+                class="field__input"
+                autocomplete="name"
+                type="text"
+                id="ContactForm-name"
+                name="contact[First Name]"
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                placeholder="First Name"
+              >
+            </div>
+            <div class="form_field">
+              <label class="field__labell" for="ContactForm-lastname">Last Name*</label>
+              <input
+                class="field__input"
+                autocomplete="name"
+                type="text"
+                id="ContactForm-lastname"
+                name="contact[Last Name]"
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                placeholder="Last Name"
+              >
+            </div>
+          </div>
+          <div class="form_field field--with-error">
+            <label class="field__labell" for="ContactForm-email">
+              {{- 'templates.contact.form.email' | t }}
+              <span aria-hidden="true">*</span></label
+            >
+            <input
+              autocomplete="email"
+              type="email"
+              id="ContactForm-email"
+              class="field__input"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              placeholder="{{ 'templates.contact.form.email' | t }}"
+            >
+          </div>
+          <div class="form_field field--with-error">
+            <label class="field__labell" for="ContactForm-email">
+              Phone Number
+              <span aria-hidden="true">*</span></label
+            >
+            <input
+              type="text"
+              id="ContactForm-phone"
+              class="field__input"
+              name="contact[Phone]"
+              spellcheck="false"
+              autocapitalize="off"
+              value=""
+              aria-required="true"
+              placeholder="Phone Number"
+            >
+          </div>
+          <div class="form_field label-multiselect">
+            <label class="field__labell" for="ContactForm-product-enquiry">Product*</label>
+            <input id="product-inquiry" name="contact[Product Name]" class="field__input" value="" readonly>
+            <div class="product_multi-selection">
+              <ul>
+                {% for product in collections.all.products %}
+                  <li>
+                    <fieldset>
+                      <label>
+                        <input type="checkbox" name="product" value="{{ product.title }}">
+                        <span>{{ product.title }}</span>
+                      </label>
+                    </fieldset>
+                    {% unless product.has_only_default_variant %}
+                      <ul class="variant-select">
+                        {% for variant in product.variants %}
+                          <li>
+                            <fieldset>
+                              <label>
+                                <input
+                                  type="checkbox"
+                                  data-parent="{{ product.title }}"
+                                  name="variant"
+                                  value="{{ product.title }} {{ variant.title }}"
+                                >
+                                <span>{{ variant.title }}</span>
+                              </label>
+                            </fieldset>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endunless %}
+                  </li>
+                {% endfor %}
+                <li>
+                  <fieldset>
+                    <label>
+                      <input type="checkbox" data-parent="Moringa Powder" name="variant" value="Moringa Powder">
+                      <span>Moringa Powder</span>
+                    </label>
+                  </fieldset>
+                </li>
+                <li>
+                  <fieldset>
+                    <label>
+                      <input type="checkbox" data-parent="Protein Cookies" name="variant" value="Protein Cookies">
+                      <span>Protein Cookies</span>
+                    </label>
+                  </fieldset>
+                </li>
+                <li>
+                  <fieldset>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-parent="Shilajit Supplement"
+                        name="variant"
+                        value="Shilajit Supplement"
+                      >
+                      <span>Shilajit Supplement</span>
+                    </label>
+                  </fieldset>
+                </li>
+                <li>
+                  <fieldset>
+                    <label>
+                      <input type="checkbox" data-parent="Keto Aata" name="variant" value="Keto Aata">
+                      <span>Keto Aata</span>
+                    </label>
+                  </fieldset>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form_field">
+            <label class="field__labell" for="subject">Subject</label>
+            <input
+              class="field__input"
+              type="text"
+              id="contact-form-subject"
+              name="contact[subject-title]"
+              value=""
+              placeholder="Subject"
+            >
+          </div>
+          <div class="form_field">
+            <label class="form__label field__labell" for="ContactForm-body"> Message </label>
+            <textarea
+              rows="10"
+              id="ContactForm-body"
+              class="text-area field__input"
+              name="contact[{{ 'templates.contact.form.comment' | t }}]"
+              placeholder="Message"
+            >
+              {{- form.body -}}
+            </textarea>
+          </div>
+          <div class="contact__button">
+            <button type="submit" class="button-primary submit_enquire-form">
+              {{ 'templates.contact.form.send' | t }}
+            </button>
+          </div>
+          <div class="form-errors" style="display:none;">
+            <ul>
+              <li class="firstNameError" style="display: none;">First Name is Required.</li>
+              <li class="lastNameError" style="display: none;">Last Name is Required.</li>
+              <li class="emailError" style="display: none;">Email is Required.</li>
+              <li class="phoneError" style="display: none;">Phone Number must be 10 digits.</li>
+              <li class="subjectError" style="display: none;">Form Subject Is required.</li>
+              <li class="bodyError" style="display: none;">Form Body Is required.</li>
+            </ul>
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<select id="jsonpr">
+  {% for product in collections.all.products %}
+    {% for variant in product.variants %}
+      <option value="{{ variant.id }}" data-id="{{ product.id }}">
+        {{ product.title }}
+        {{ variant.title | replace: '/', '|' }}
+      </option>
+    {% endfor %}
+  {% endfor %}
+</select>
+
+{% stylesheet %}
+  .product_multi-selection ul {
+      padding: 0;
+      list-style-type: none;
+      margin: 0;
+  }
+  .variant-select {
+      display: none;
+  }
+  .product_multi-selection{
+    display: none;
+  }
+  .product_multi-selection ul li:not(:last-child) fieldset {
+      border-bottom: none;
+  }
+  input#product-inquiry {
+      margin-bottom: 0;
+      padding-right: 50px;
+  }
+  #product-inquiry[open]~.product_multi-selection {
+      display: block;
+  }
+  .label-multiselect:after {
+      content: "\f078";
+      font-family: "Font awesome 5 pro";
+      position: absolute;
+      right: 15px;
+      top: 52px;
+  }
+  .form_field.label-multiselect {
+      position: relative;
+      margin-bottom: 20px;
+  }
+  .label-multiselect.active:after {
+      content: "\f077";
+  }
+  .product_multi-selection li.open .variant-select {
+      display: block;
+  }
+  ul.variant-select li {
+      background: #F1FFF6;
+  }
+  .product_multi-selection fieldset.selected {
+      background: #E6FFF3;
+  }
+  .product_multi-selection input[type="checkbox"]+label:after {
+      content: "";
+      background: #145B39;
+      width: 13px;
+      height: 13px;
+      position: absolute;
+      left: 15px;
+      top: 12px;
+      border-radius: 2px;
+  }
+.product_multi-selection fieldset label:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background: #145b39;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 2px;
+    bottom: 0;
+    border-radius: 2px;
+    margin: auto;
+}
+.contact-form-wrapper label {
+    color: #000;
+    font-size: 16px;
+    font-family: Poppins;
+    letter-spacing: 1px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+  .product_multi-selection input {
+      opacity: 0;
+  }
+  .product_multi-selection fieldset.selected label:after {
+      border: solid white;
+      border-width: 0px 3px 3px 0px;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 9px;
+      width: 5px;
+      height: 10px;
+  }
+.product_multi-selection ul li > fieldset {
+    position: relative;
+}
+.product_multi-selection ul li:nth-child(1) > fieldset:after,.product_multi-selection ul li:nth-child(2) > fieldset:after,.product_multi-selection ul li:nth-child(3) > fieldset:after {
+    content: "\f078";
+    font-family: 'Font awesome 5 pro';
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: fit-content;
+}
+ul.variant-select li fieldset:after {
+    display: none;
+}
+.product_multi-selection ul li:nth-child(1)>fieldset.selected:after,.product_multi-selection ul li:nth-child(2)>fieldset.selected:after,.product_multi-selection ul li:nth-child(3)>fieldset.selected:after {
+    content: "\f077";
+}
+{% endstylesheet %}
+
+<script>
+  $(document).ready(function(){
+  $('#product-inquiry').click(function(){
+    const isOpen = $(this).attr('open') !== undefined;
+    if (isOpen) {
+        $(this).removeAttr('open');
+        $(this).parent().removeClass('active');
+    } else {
+        $(this).parent().addClass('active');
+        $(this).attr('open', true);
+    }
+  });
+
+  let firstChange = true; // Flag to track the first change
+
+  $('.product_multi-selection input[name="product"]').change(function() {
+
+      let currentVal = firstChange ? [] : $('#product-inquiry').val().split(', ').filter(Boolean);
+      // Get the current values of the input, if it's not the first change
+
+      if ($(this).is(':checked')) {
+
+          $(this).parents('fieldset').addClass('selected');
+          // If it's the first change, clear the input
+          if (firstChange) {
+              $('#product-inquiry').val(''); // Clear the input field
+              firstChange = false; // Set the flag to false after the first change
+          }
+
+          // Add the selected product to the array
+          currentVal.push($(this).val());
+          $('#product-inquiry').val(currentVal.join(', ')); // Update the input with joined values
+          $(this).parents('li').find('.variant-select').slideDown();
+      } else {
+          $(this).parents('fieldset').removeClass('selected');
+          // Remove the unchecked product from the array
+          currentVal = currentVal.filter(product => product !== $(this).val());
+          $('#product-inquiry').val(currentVal.join(', ')); // Update the input
+          $(this).parents('li').find('.variant-select').slideUp();
+      }
+  });
+  $('.product_multi-selection input[name="variant"]').change(function() {
+      let currentVal = firstChange ? [] : $('#product-inquiry').val().split(', ').filter(Boolean);
+
+      if ($(this).is(':checked')) {
+        var parentValue = $(this).data('parent');
+        if (currentVal.includes(parentValue)) {
+            currentVal.pop(parentValue); // Add parent value if not present
+        }
+
+        $(this).parents('fieldset').addClass('selected');
+        if (firstChange) {
+            $('#product-inquiry').val(''); // Clear the input field
+            firstChange = false; // Set the flag to false after the first change
+        }
+        currentVal.push($(this).val());
+        $('#product-inquiry').val(currentVal.join(', '));
+    } else {
+        var varLen = $('[name="variant"]:checked').length;
+        if (varLen == 0){
+          var parentValue = $(this).data('parent');
+          if (!currentVal.includes(parentValue)) {
+              currentVal.push(parentValue); // Add parent value if not present
+          }
+        }
+          $(this).parents('fieldset').removeClass('selected');
+          // Remove the unchecked product from the array
+          currentVal = currentVal.filter(product => product !== $(this).val());
+          $('#product-inquiry').val(currentVal.join(', ')); // Update the input
+      }
+  });
+
+
+
+
+    $('.submit_enquire-form').click(function(e){
+
+      var first_name = $('#ContactForm-name').val();
+      var last_name = $('#ContactForm-lastname').val();
+      var phone_number = $('#ContactForm-phone').val();
+      var email = $('#ContactForm-email').val();
+      var body = $('#ContactForm-body').val();
+      var subject = $('#contact-form-subject').val();
+      var errorWrapper = $('.form-errors');
+      var submission = true; // Assume submission is valid initially
+
+      if (first_name.length == 0) {
+        errorWrapper.show();
+        $('.firstNameError').show();
+        submission = false;
+      }
+
+      if (last_name.length == 0) {
+        errorWrapper.show();
+        $('.lastNameError').show();
+        submission = false;
+      }
+
+      if (phone_number.length == 0) {
+        errorWrapper.show();
+        $('.phoneError').show();
+        submission = false;
+      }
+
+      if (email.length == 0) {
+        errorWrapper.show();
+        $('.emailError').show();
+        submission = false;
+      }
+
+      if (body.length == 0) {
+        errorWrapper.show();
+        $('.bodyError').show();
+        submission = false;
+      }
+
+      if (subject.length == 0) {
+        errorWrapper.show();
+        $('.subjectError').show();
+        submission = false;
+      }
+
+      $('#ContactForm-name').on('input', function() {
+        $('.firstNameError').hide();
+      });
+
+      $('#ContactForm-lastname').on('input', function() {
+        $('.lastNameError').hide();
+      });
+
+      $('#ContactForm-phone').on('input', function() {
+        $('.phoneError').hide();
+      });
+
+      $('#ContactForm-email').on('input', function() {
+        $('.emailError').hide();
+      });
+
+      $('#ContactForm-body').on('input', function() {
+        $('.bodyError').hide();
+      });
+
+      $('#contact-form-subject').on('input', function() {
+        $('.subjectError').hide();
+      });
+
+      // If any validation fails, prevent form submission
+      if (submission) {console.log('ssss')
+        // $(this).parent('form').submit();
+      } else {
+        e.preventDefault();
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.contact-form.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Contact form",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.contact-form.presets.name"
+    }
+  ]
+}
+{% endschema %}

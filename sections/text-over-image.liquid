@@ -1,0 +1,99 @@
+<section class="text-over-image">
+  <div class="image-over-wrapper">
+    <picture>
+      {% if section.settings.m_img != blank %}
+      <source srcset="{{ section.settings.d_img | img_url:'' }}" media="(min-width: 526px)">
+      <source srcset="{{ section.settings.m_img | img_url:'' }}" media="(max-width: 525px)">
+      {% endif %}
+      <img src="{{ section.settings.d_img | img_url:'' }}" loading="lazy" alt="" width="100" height="100">
+    </picture>
+    <div class="text-floater">
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.subtext }}</p>
+      {% if section.settings.link != blank %}<a href="{{ section.settings.link }}" class="button-primary">{{ section.settings.label }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.image-over-wrapper picture img {
+    width: 100%;
+    height: auto;
+}
+.image-over-wrapper {
+    position: relative;
+}
+.text-floater {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: fit-content;
+    width: 100%;
+    padding: 0 20px;
+    text-align: center;
+}
+.text-floater h2 {
+    line-height: 96%;
+    font-size: 5.5vw;
+    color: #FFF;
+    font-weight: 800;
+    font-family: 'Poppins';
+}
+.text-floater p {
+    color: #fff;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+{% endstylesheet %}
+
+
+{% schema %}
+  {
+    "name": "Text Over Image",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id" : "d_img",
+        "label": "Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id" : "m_img",
+        "label": "Mobile Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Heading"
+      },
+      {
+        "type": "text",
+        "id": "subtext",
+        "label": "Section Subhead"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Button Link"
+      },
+      {
+        "type": "text",
+        "id": "label",
+        "label": "Button Label",
+        "default" : "Know More"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text Over Image"
+      }
+    ]
+  }
+{% endschema %}

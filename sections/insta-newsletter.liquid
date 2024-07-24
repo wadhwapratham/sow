@@ -1,0 +1,318 @@
+<section class="instagram-newsletter">
+  <div class="instagram-newsletter-wrapper">
+    <div class="wrapper-instagram" style="background: {{ section.settings.instabgcol }}">
+      <div class="inner-instagram-wrapper">
+        <h2 data-aos="fade-up" data-aos-duration="700">{{ section.settings.instaHead }}</h2>
+        <div class="insagram-wrapper">
+          <div class="instagram-posts">
+          {% for block in section.blocks %}
+            <div class="instagram-item">
+              <a href="{{ block.settings.link }}">
+                <img src="{{ block.settings.img | img_url:'400x' }}" loading="lazy" width='100' height="100" alt="{{ block.settings.img.alt }}">
+              </a>
+            </div>  
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-newsletter" style="background: {{ section.settings.newsbgcol }}">
+      <div class="newsletter-container">
+        <h2 data-aos="fade-up" data-aos-duration="700">{{ section.settings.newsHead }}</h2>
+        <div class="container-newsblock">
+        <p>{{ section.settings.formhead }}</p>
+        <div class="newsletter-blockform">
+          {% form 'customer' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="form_fieldblock">
+              <label for="firstname">First Name*</label>
+              <input type="text" name="contact[first_name]" id="customer_firstname" class="sectionNewsfield" required>
+            </div>
+            <div class="form_fieldblock">
+              <label for="lasttname">Last Name*</label>
+              <input type="text" name="contact[lastt_name]" id="customer_lastname" class="sectionNewsfield" required>
+            </div>            
+            <div class="form_fieldblock">
+            <label for="email">Email*</label>
+            <input
+              id="NewsletterForm--{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              class="sectionNewsfield"
+              value="{{ form.email }}"
+              aria-required="true"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              {% if form.errors %}
+                autofocus
+                aria-invalid="true"
+                aria-describedby="ContactFooter-error"
+              {% elsif form.posted_successfully? %}
+                aria-describedby="ContactFooter-success"
+              {% endif %}
+              placeholder="{{ 'newsletter.label' | t }}"
+              required
+            >
+            </div>
+            <p class="mandatoryInfo">* Mandatory informations</p>
+
+            <button
+              type="submit"
+              class="sectionform__button"
+              name="commit"
+              id="Subscribe"
+              aria-label="{{ 'newsletter.button_label' | t }}"
+            >
+              SUBSCRIBE
+            </button>
+            {%- if form.errors -%}
+                <small class="newsletter-form__message form__message" id="ContactFooter-error">
+                  {%- render 'icon-error' -%}
+                  {{- form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </small>
+            {%- endif -%}
+            {%- if form.posted_successfully? -%}
+              <h3
+                class="newsletter-form__message newsletter-form__message--success form__message"
+                id="ContactFooter-success"
+                tabindex="-1"
+                autofocus
+              >
+                {% render 'icon-success' -%}
+                {{- 'newsletter.success' | t }}
+              </h3>
+            {%- endif -%}
+          {% endform %}
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% stylesheet %}
+.instagram-newsletter-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.instagram-posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    max-width: 548px;
+    margin: auto;
+    padding: 52px 0;
+}
+.instagram-posts .instagram-item img {
+    width: 100%;
+    height: auto;
+    max-width: 260px;
+}
+.instagram-newsletter-wrapper h2 {
+    color: #054327;
+    font-size: 36px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 26px;
+}
+.inner-instagram-wrapper {
+    max-width: 620px;
+    margin-left: auto;
+}
+.wrapper-instagram {
+    padding: 64px 50px;
+}
+.wrapper-newsletter {
+    padding: 64px 118px;
+}
+.newsletter-container {
+    max-width: 484px;
+    margin-right: auto;
+}
+.container-newsblock {
+    background: #FFCE9E;
+    border: 0.8px solid #D46600;
+    border-radius: 15px;
+    padding: 49px 32px;
+    margin-top: 78px;
+    display: block;
+}
+.container-newsblock p {
+    font-size: 16px;
+    color: #161616;
+    text-align: center;
+    line-height: 24px;
+    margin-bottom: 41px;
+}
+.form_fieldblock {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+}
+.form_fieldblock label {
+    font-size: 16px;
+    color: #161616;
+    font-weight: 500;
+    line-height: 24px;
+    font-family: 'Poppins';
+}
+.form_fieldblock input {
+    height: 50px;
+    border: 1px solid #C9C9C9;
+    border-radius: 3px;
+    padding: 10px 20px;
+}
+p.mandatoryInfo {
+    font-size: 12px;
+    text-align: left;
+    color: #8C1823;
+    line-height: 16px;
+}
+button.sectionform__button {
+    background: #EC7100;
+    width: 100%;
+    height: 56px;
+    padding: 16px 26px;
+    border: none;
+    border-radius: 8px;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    cursor: pointer;
+    border: 2px solid #EC7100;
+    transition: .2s ease-in-out;
+}
+button.sectionform__button:hover {
+    background: transparent;color: #EC7100;
+}
+@media screen and (max-width: 1024px){
+  .wrapper-newsletter {
+    padding: 64px 50px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .instagram-newsletter-wrapper h2 {
+    color: #054327;
+    font-size: 20px;
+  }
+  .instagram-posts {
+    gap: 14px;
+  }
+  .container-newsblock p {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .instagram-newsletter-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .wrapper-newsletter {
+    padding: 48px 24px;
+  }
+  .wrapper-instagram {
+    padding: 48px 0 48px 24px;
+    overflow: hidden;
+  }
+  .container-newsblock {
+    background: #ffce9e;
+    border: .8px solid #D46600;
+    border-radius: 15px;
+    padding: 49px 32px;
+    margin-top: 36px;
+  }
+  .instagram-posts {
+    padding: 10px 0;
+  }
+  .instagram-posts .instagram-item img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    padding-right: 20px;
+  }
+  .instagram-posts .slick-arrow {
+    right: 0px;
+    background: #FFC773;
+    width: 48px;
+    height: 48px;
+    border-radius: 50px;
+  }
+  .instagram-posts .slick-arrow:before {
+    color: #7B3B00;
+  }
+  
+}
+
+  
+  
+{% endstylesheet %}
+  
+{% schema %}
+  {
+    "name": "Instagram Newsletter",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Instagram"
+      },
+      {
+        "type": "color",
+        "id" : "instabgcol",
+        "label": "Instagram Background Color"
+      },
+      {
+        "type": "text",
+        "id": "instaHead",
+        "label": "Section Block Heading"
+      },
+      {
+        "type": "header",
+        "content": "Newsletter Form"
+      },
+      {
+        "type": "text",
+        "id": "newsHead",
+        "label": "Section Block Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "formhead",
+        "label": "Form Subheading"
+      },
+      {
+        "type": "color",
+        "id" : "newsbgcol",
+        "label": "Newsletter Background Color"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "instagram",
+        "name" : "Post",
+        "limit": 4,
+        "settings": [
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Instagram Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Instagram Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Instagram Newsletter"
+      }
+    ]
+  }
+{% endschema %}

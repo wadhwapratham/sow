@@ -1,0 +1,313 @@
+<section class="product-feature-section section-width">
+    <div class="seaction-wrapper-feature{% if section.settings.layout == false %} layout-swapped{% endif %}">
+      {% if section.settings.layout == false %}
+      <div class="feature-image">
+        <img src="{{ section.settings.image | img_url:'600x' }}" width="100" height="100" loading="lazy" alt="{{ section.settings.title }}">
+      </div>
+      {% endif %}
+      <div class="feature-product">
+        <div class="feature-container-content" {% if section.settings.layout == true %}data-aos="fade-right"{% else %}data-aos="fade-left"{% endif %} data-aos-duration="700">
+          <h2>{{ section.settings.title }}</h2>
+          <p>{{ section.settings.subhead }}</p>
+          <ul>
+            {% for block in section.blocks %}
+              <li><span>{% render 'icon-check' %}</span><span>{{ block.settings.feature }}</span></li>
+            {% endfor %}
+          </ul>
+          <div class="button-wrapper-feature">
+            {% if section.settings.prid != blank %}
+              <a href="javascript:void(0);" data-product-id="{{ section.settings.prid }}" data-href="{{ section.settings.btn }}" class="enquireBtn button-secondary">{{ section.settings.btn_label }}</a>
+            {% endif %}
+            {% if section.settings.btn1 != blank %}
+              <a href="{{ section.settings.btn1 }}" class="button-secondary btn-bg-transparent">{{ section.settings.btn_label1 }}</a>
+            {% endif %}
+          </div>
+            
+        </div>
+      </div>
+      {% if section.settings.layout == true %}
+      <div class="feature-image">
+        <img src="{{ section.settings.image | img_url:'' }}" width="100" height="100" loading="lazy" alt="{{ section.settings.title }}">
+      </div>
+      {% endif %}
+    </div>
+</section>
+
+
+{% stylesheet %}
+.seaction-wrapper-feature {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    background: #E6FFF3;
+    border-radius: 32px;
+}
+.seaction-wrapper-feature.layout-swapped img {
+    border-radius: 32px 0 0 32px;
+}
+section.product-feature-section {
+    padding-top: 64px;
+    padding-bottom: 72px;
+    overflow: hidden;
+}
+.seaction-wrapper-feature img {
+    width: 100%;
+    height: auto;
+}
+.feature-product h2 {
+    font-size: 36px;
+    color: #054327;
+    font-family: Mochiy Pop one;
+    line-height: 52px;
+}
+.feature-product p {
+    color: #7ECBA8;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+.feature-product ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+.feature-product ul li span:first-child {
+    width: 22px;
+    height: 23px;
+}
+.feature-product ul li {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #A8DDC2;
+    margin-bottom: 10px;
+    gap: 20px;
+}
+.feature-product ul li span:first-child {
+    width: 22px;
+    height: 23px;
+}
+.feature-product ul li span:last-child {
+    font-weight: 600;
+    font-size: 18px;
+    font-family: 'Poppins';
+    color: #1B4B35;
+}
+.feature-container-content {
+    max-width: 100%;
+    width: 100%;
+    padding: 20px 80px;
+}
+.feature-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-wrapper-feature a {
+    margin: 30px 0 0 0 !important;
+}
+.button-wrapper-feature {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 28px;
+    margin: 30px 0 0 0;
+}
+.seaction-wrapper-feature img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+    border-radius: 0 32px 32px 0;
+}
+
+@media screen and (max-width: 1200px){
+  .feature-product h2 {
+    font-size: 28px;
+    line-height: 32px;
+  }
+  .feature-product ul li span:last-child {
+    font-size: 15px;
+  }
+  .feature-product ul li span:first-child,.feature-product ul li span:first-child svg {
+    width: 18px;
+    height: 18px;
+  }
+  .feature-product ul li {
+    gap: 10px;
+  }
+  .button-wrapper-feature {
+    gap: 30px;
+  }
+  .feature-product ul {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 1024px){
+  .feature-container-content {
+    max-width: 85%;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .feature-product h2 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .feature-product p {
+    font-size: 12px;
+  }
+  .feature-product ul li span:last-child {
+    font-size: 14px;
+  }
+  .feature-container-content {
+    max-width: 100%;
+    padding: 30px 30px;
+  }
+  .feature-image {
+    display: flex;
+    height: 100%;
+  }
+  .seaction-wrapper-feature {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .feature-product {
+    order: 2;
+  }
+  .feature-image {
+    order: 1;
+  }
+  .seaction-wrapper-feature img {
+    border-radius: 32px 32px 0 0;
+  }
+  .feature-container-content {
+    max-width: 100%;
+    width: 100%;
+    padding: 20px;
+  }
+  .button-wrapper-feature a {
+    margin: unset;
+  }
+  .button-wrapper-feature {
+    gap: 10px;
+  }
+  .feature-product h2,.feature-product p {
+        text-align: center;
+  }
+  .seaction-wrapper-feature.layout-swapped .feature-image img {
+    border-radius: 32px 32px 0 0;
+  }
+  section.product-feature-section {
+      padding-top: 48px;
+      padding-bottom: 48px;
+  }
+  #shopify-section-template--17588226982116__sustainability_DpfMj6 .item-ethics {
+    padding: 0;
+  }
+  #shopify-section-template--17588226982116__sustainability_DpfMj6 .item-ethics img {
+    width: 120px;
+    height: 120px;
+  }
+  #shopify-section-template--17588226982116__sustainability_DpfMj6 .item-ethics {
+    max-width: 120px;
+  }
+  #shopify-section-template--17588226982116__sustainability_DpfMj6 .container-main-ethics {
+    column-gap: 54px;
+    row-gap: 32px;
+  }
+  #shopify-section-template--17588226982116__sustainability_DpfMj6 .item-ethics h3 {
+    font-size: 14px;
+  }
+  a.button-secondary {
+    margin: 0 !important;
+  }
+  .button-wrapper-feature {
+    margin: 24px 0 0;
+  }
+}
+
+@media screen and (max-width: 525px){
+  .button-wrapper-feature {
+      justify-content: center;
+      gap: 16px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Product Features",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "layout",
+        "label": "Revert Layout"
+      },
+      {
+        "type": "text",
+        "id": "prid",
+        "label": "Product Id",
+        "info": "Mandatory Field for enquiry"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Section Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "subhead",
+        "label": "Section Sub-Heading"
+      },
+      {
+        "type": "url",
+        "id": "btn",
+        "label": "Button Link 1"
+      },
+      {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Button Label 1",
+        "default" : "Enquire Now"
+      },
+      {
+        "type": "url",
+        "id": "btn1",
+        "label": "Button Link 2"
+      },
+      {
+        "type": "text",
+        "id": "btn_label1",
+        "label": "Button Label 2",
+        "default" : "Learn More"
+      }
+    ],
+    "blocks": [
+      {
+        "name" : "Feature",
+        "type": "repeater",
+        "limit": 4,
+        "settings": [
+          {
+            "type": "text",
+            "id": "feature",
+            "label": "Feature"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Features"
+      }
+    ]
+  }
+{% endschema %}

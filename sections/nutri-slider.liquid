@@ -1,0 +1,55 @@
+<section class="butritional-slider">
+  <div class="nutri-wrapper">
+    {% for block in section.blocks %}
+      <div class="nutri-slider-item">
+          <img src="{{ block.settings.nutri_logo | img_url:'250x' }}" title="{{ block.settings.title }}" alt="{{ block.settings.title }}" width="277" height="74" loading="lazy"/>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% stylesheet %}
+.nutri-wrapper {
+    display: flex;
+    max-width: 1360px;
+    margin: auto;
+    padding: 0 24px;
+}
+section.butritional-slider {
+    background: #CCFFCB;
+    padding: 27px 0;
+}
+.nutri-slider-item {
+    padding: 0 10px;
+}
+.nutri-slider-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Nutritional Slider",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "slider",
+        "name" : "Nutritional Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "nutri_logo",
+            "label": "Butritional Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Nutritional Slider"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,195 @@
+<section class="gummy-comparison-section">
+  <div class="compare-wrapper">
+    <div class="sow-food-gummies">
+      <div class="content-gummy-wrapper wrapper-sow-gummy" style="background: {{ section.settings.bgCol }}">
+        <div class="content-inner-gummy">
+        <h2 data-aos="fade-up" data-aos-duration="700">{{ section.settings.block_1_head }}</h2>
+        <img src="{{ section.settings.sowgummy | img_url:'620x' }}" width="100" height="100" alt="{{ section.settings.block_1_head }}">
+          <ul>
+            {% for block in section.blocks %}
+              {% if block.type == 'benefits' %}
+                  <li><span>{% render 'icon-right' %}</span><span>{{ block.settings.listItem }}</span></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="content-gummy-wrapper wrapper-normal-gummy" style="background: {{ section.settings.bgCol2 }}">
+        <div class="content-inner-gummy">
+        <h2 data-aos="fade-up" data-aos-duration="700">{{ section.settings.block_2_head }}</h2>
+        <img src="{{ section.settings.normalgummy | img_url:'620x' }}" width="100" height="100" alt="{{ section.settings.block_2_head }}">
+          <ul>
+            {% for block in section.blocks %}
+              {% if block.type == 'disadvantage' %}
+                  <li><span>{% render 'icon-disadvantage' %}</span><span>{{ block.settings.normalItem }}</span></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% stylesheet %}
+.sow-food-gummies {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 64px;
+}
+.content-gummy-wrapper ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 432px;
+    margin: auto;
+}
+.content-gummy-wrapper ul li{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.content-gummy-wrapper.wrapper-sow-gummy ul li {
+    color: #1B4B35;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+}
+.content-gummy-wrapper.wrapper-normal-gummy ul li {
+    color: #7B3B00;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+}
+.content-gummy-wrapper ul li span:first-child svg,.content-gummy-wrapper ul li span:first-child {
+    width: 28px;
+    height: 28px;
+}
+.content-gummy-wrapper ul li:not(:last-child) {
+    margin-bottom: 26px;
+}
+.content-gummy-wrapper h2 {
+    text-align: center;
+    font-size: 36px;
+    font-family: 'Mochiy Pop One';
+    line-height: 50px;
+    color: #042F18;
+}
+.content-gummy-wrapper img {
+    width: 100%;
+    max-width: 620px;
+    margin: auto;
+    height: auto;
+    max-height: 511px;
+}
+.content-gummy-wrapper.wrapper-sow-gummy .content-inner-gummy {
+    padding: 64px 50px;
+    max-width: 720px;
+    margin-left: auto;
+}
+.content-gummy-wrapper.wrapper-normal-gummy .content-inner-gummy {
+    padding: 64px 50px;
+    max-width: 720px;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 768px){
+  .content-gummy-wrapper h2 {
+    font-size: 24px;
+    line-height: 36px;
+  }
+  .content-gummy-wrapper ul li span:first-child svg, .content-gummy-wrapper ul li span:first-child {
+    width: 24px;
+    height: 24px;
+  }
+  .content-gummy-wrapper.wrapper-sow-gummy ul li,.content-gummy-wrapper.wrapper-normal-gummy ul li {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .sow-food-gummies {
+    grid-template-columns: repeat(1, 1fr);
+    margin-bottom: 0;
+  }
+  .content-gummy-wrapper.wrapper-normal-gummy .content-inner-gummy,.content-gummy-wrapper.wrapper-sow-gummy .content-inner-gummy {
+    padding: 48px 24px;
+    max-width: 100%;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Gummy Comparison",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sow Gummy"
+      },
+      {
+        "type": "color",
+        "id": "bgCol",
+        "label": "Background Color"
+      },
+      {
+        "type": "text",
+        "id": "block_1_head",
+        "label": "Block Heading"
+      },
+      {
+        "type": "image_picker",
+        "id": "sowgummy",
+        "label": "Block Image"
+      },
+      {
+        "type": "header",
+        "content": "Normal Gummy"
+      },
+      {
+        "type": "color",
+        "id": "bgCol2",
+        "label": "Background Color"
+      },
+      {
+        "type": "text",
+        "id": "block_2_head",
+        "label": "Block Heading"
+      },
+      {
+        "type": "image_picker",
+        "id": "normalgummy",
+        "label": "Block Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "benefits",
+        "name" : "Sow Gummy",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "listItem",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "disadvantage",
+        "name" : "Normal Gummy",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "normalItem",
+            "label": "Content"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Gummy Comparison"
+      }
+    ]
+  }
+{% endschema %}
