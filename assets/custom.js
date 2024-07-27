@@ -296,7 +296,7 @@ $(document).ready(function(){
         var productIdForm = $(this).attr('value');
         if (productIdForm == enquiureId){
           $(this).attr('selected',true);
-          selectedVar = $(this).text();
+          selectedVar = $(this).text().trim();
         }
       });
       $('#product-inquiry').val(selectedVar);

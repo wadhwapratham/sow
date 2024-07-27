@@ -1075,6 +1075,17 @@ section.our-produc-section {
   }
   .header__icons {
     align-items: center;
+    gap: 3px;
+  }
+  .menu-drawer__navigation .list-menu__item {
+    font-size: 16px;
+    color: #054327;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 0.6px solid #00B764;
+    margin: 0 20px;
+    line-height: 24px !important;
+    padding-left: 0  !important;
   }
 }
 
