@@ -26,6 +26,14 @@
       </a>
     </li>
   {%- endif -%}
+  {%- if settings.social_linkedin != blank -%}
+    <li class="list-social__item">
+      <a href="{{ settings.social_linkedin }}" class="link list-social__link">
+        {%- render 'icon-linkedin' -%}
+        <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
   {%- if settings.social_youtube_link != blank -%}
     <li class="list-social__item">
       <a href="{{ settings.social_youtube_link }}" class="link list-social__link">

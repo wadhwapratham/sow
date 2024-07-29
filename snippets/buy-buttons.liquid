@@ -24,7 +24,6 @@
       endif
     -%}
 
-    {% comment %}
     <product-form
       class="product-form"
       data-hide-errors="{{ gift_card_recipient_feature_active }}"
@@ -99,7 +98,6 @@
           {%- endif -%}
         </div>
       {%- endform -%}
-    {% endcomment %}
     </product-form>
   {%- else -%}
     <div class="product-form">
@@ -115,7 +113,7 @@
       </div>
     </div>
   {%- endif -%}
-  <a href="/pages/contact" data-product-id="{{ product.selected_or_first_available_variant.id }}" class="productEnquire product-form__submit button button--full-width">Enquire Now</a>
+  {% comment %} <a href="/pages/contact" data-product-id="{{ product.selected_or_first_available_variant.id }}" class="productEnquire product-form__submit button button--full-width">Enquire Now</a> {% endcomment %}
 
   {%- if show_pickup_availability -%}
     {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
